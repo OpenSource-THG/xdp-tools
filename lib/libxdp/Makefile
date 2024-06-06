@@ -28,7 +28,7 @@ PC_FILE := $(OBJDIR)/libxdp.pc
 TEMPLATED_SOURCES := xdp-dispatcher.c
 
 CFLAGS += -I$(HEADER_DIR)
-BPF_CFLAGS += -I$(HEADER_DIR)
+BPF_CFLAGS += -I$(HEADER_DIR) $(ARCH_INCLUDES)
 
 
 ifndef BUILD_STATIC_ONLY
@@ -42,7 +42,7 @@ endif
 all: $(STATIC_LIBS) $(SHARED_LIBS) $(XDP_OBJS) $(PC_FILE) check man
 
 clean:
-	$(Q)rm -f $(STATIC_LIBS) $(STATIC_OBJS) $(SHARED_LIBS) $(SHARED_OBJS) $(XDP_OBJS) $(PC_FILE) $(MAN_OBJ) $(TEMPLATED_SOURCES)
+	$(Q)rm -f $(STATIC_LIBS) $(STATIC_OBJS) $(SHARED_LIBS) $(SHARED_OBJS) $(XDP_OBJS) $(PC_FILE) $(MAN_OBJ) $(TEMPLATED_SOURCES) *.ll
 	$(Q)for d in $(SHARED_OBJDIR) $(STATIC_OBJDIR); do \
 		[ -d "$$d" ] && rmdir "$$d"; done || true
 	$(Q)$(MAKE) -C $(TEST_DIR) clean
